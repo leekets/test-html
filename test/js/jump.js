@@ -8,7 +8,7 @@ if(x==null){
 	pid=cateJSON[a].parentId;
 	b=a-1;
 	c=Number(a)+Number(1);
-	$(".f_cate").attr("href","tree"+pid+".html?id="+pid);
+	$(".f_cate").attr("href","index.html?id="+pid);
 	$(".f_up").prepend(cateJSON[b].category);
 	$(".f_up").attr("href","test.html?id="+cateJSON[b].ID);
 	printSize(newsJSON, cateJSON[b].ID, function(data){$(".f_up span").html(data);});
