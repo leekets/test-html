@@ -1,0 +1,115 @@
+/* line 3, ../sass/sass.scss */
+.postpage {
+  clear: both;
+  border-top: 1px solid#eee;
+  background-color: #cbcbcb;
+  overflow: visible;
+  padding: 9px;
+}
+
+/* line 11, ../sass/sass.scss */
+.sharewith {
+  background-color: #b3b3b3;
+  border: 1px solid #a4a4a4;
+  position: relative;
+  overflow: visible;
+  padding: 5px;
+  -webkit-border-radius: 3px;
+}
+/* line 18, ../sass/sass.scss */
+.sharewith b {
+  display: block;
+  font-size:22px;
+  -webkit-text-size-adjust: none;
+  font-weight: normal;
+}
+
+/* line 25, ../sass/sass.scss */
+.updatebtn {
+  background-color: #003682;
+  height: 40px;
+  margin-top: 9px;
+  background-image: url("images/updatebtn.gif");
+  display: block;
+}
+/* line 31, ../sass/sass.scss */
+.updatebtn strong {
+  display: block;
+  background-image: url("images/updatebtn_right.gif");
+  background-position: top right;
+  background-repeat: no-repeat;
+}
+/* line 36, ../sass/sass.scss */
+.updatebtn strong b {
+  display: block;
+  background-image: url("images/updatebtn_left.gif");
+  background-position: top left;
+  background-repeat: no-repeat;
+  font-size: 22px;
+  color: white;
+  text-shadow: 1px 1px 0 #003682;
+  font-weight: normal;
+  text-align: center;
+  -webkit-text-size-adjust: none;
+  padding-top: 6px;
+  padding-bottom: 8px;
+}
+
+/* line 52, ../sass/sass.scss */
+.txtr {
+  margin-top: 9px;
+  background-color: white;
+  background-image: url("../imgs/mobile_iphone/pta_content.gif");
+  background-repeat: repeat-x;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #999999;
+  padding: 5px;
+  padding-left: 2px;
+}
+/* line 54, ../sass/sass.scss */
+.txtr textarea {
+  display: block;
+  width: 99%;
+  font-family: Arial;
+  font-size: 22px;
+  height: 84px;
+  padding: 0px;
+  border: 0px;
+  background-color: transparent;
+  margin: 0px;
+  margin-right: 10px;
+  -webkit-appearance: none;
+  -webkit-text-size-adjust: none;
+}
+
+/* line 56, ../sass/sass.scss */
+#postpage {
+  clear: both;
+  border-top: 1px solid #eee;
+  background-color: #cbcbcb;
+  overflow: visible;
+  padding: 9px;
+}
+
+/* line 57, ../sass/sass.scss */
+#sharewith {
+  background-color: #b3b3b3;
+  background-image: url("../imgs/mobile_iphone/swleft.gif");
+  position: relative;
+  padding-left: 100px;
+  overflow: visible;
+}
+/* line 59, ../sass/sass.scss */
+#sharewith b {
+  display: block;
+  float: right;
+  font-size: 15px;
+  -webkit-text-size-adjust: none;
+  font-weight: normal;
+  top: 9px;
+  left: 10px;
+  position: absolute;
+}
+.keyword { color:#f00; font:bold;}

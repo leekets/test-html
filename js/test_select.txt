@@ -1,11 +1,45 @@
-﻿		
-$(function() {
+		//判断浏览器
+	if (window.navigator.userAgent.indexOf('Chrome') > -1) {
+		var f_chrome=1;
+	    //alert('Chrome!');
+	} else {
+		var f_chrome=0;
+		//alert('Not Chrome');
+	}
+
 	
+	//合并通用js	
+	var commentsAll= newsJSON
+	var url = location.href;
+	var theRequest = new Object();
+	var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
+	if (url.indexOf("?") != -1) {
+		for (var i = 0; i < paraString.length; i++) {
+			theRequest[paraString[i].split("=")[0]] = unescape(paraString[i].split("=")[1]);
+		}
+	}
+
+	
+	pid=theRequest["id"];
+//	pid=299;
+	var bothPage="asp";
+	var jumpUrl="jump.html?id="+pid;
+	var audioUrl="";
+	var comments=[];
+	for(var i=0, len=commentsAll.length; i<len; i++){
+		if(commentsAll[i].categoryId==pid){
+			comments.push(commentsAll[i]);
+		}	
+	}	
+$(function() {
+	$(".f_jumpTest").attr("href","testArr.html?id="+pid);
 	
 	//错误返回按钮延时时间；
-	var dNum= 0;	
+	var dNum= 4000;	
 	var testSize=15;
 	var c_audio=1;
+	var c_jump=1;
+	var c_select=6;
 
 	var t1= new Date().getTime(); //初始化时间
     var index = 0;	//数组指针初始化；
@@ -53,14 +87,14 @@ function act() {
 			$(".sen .cn").html(comments[index]['cn']);//答案区赋值
 			$(".btnQ").html(btnQ);
 			$(".e_act1").show();				//显示：act1元素；
-			f_select(org_comments);
+			f_select(org_comments,c_select,f_chrome);
 			if(c_audio==1){
 				s_audio="";
 				s_audio=comments[index]['subTitle']+".mp3";
 				$("audio").attr({"src": ""});
 				$("audio").attr({"src": "../audio/"+s_audio});
 				audio=document.getElementById('player') //初始化音频路径
-				play3(1);
+				play(0,1);
 			}			
 //			$("textarea.b")[0].focus();			//输入框焦点
 			
@@ -69,12 +103,27 @@ function act() {
 		else{
 			if(errors.length > 0){				//数组【错误列表】不为空
 				comments = errors;				//题库赋值错误列表
-				comments=randomOrder(comments);
-				errors = [];					//清空：错误列表；
-				index = 0;						//初始化：指针
-				eNum = 0;						//初始化：错误计数
-				$("span.sp3").html('');			//清空：页面错误计数
-				act();							//运行函数；
+				if(c_jump==1){
+					var arrErrors="";
+					for(var iErrors=0, lenErrors=errors.length; iErrors<lenErrors; iErrors++){
+						strID=errors[iErrors]['id'];
+						if(arrErrors==""){
+							arrErrors=strID;
+						}else{
+							arrErrors=arrErrors+","+strID;
+						}
+						
+					}
+	//				alert(arrErrors);
+					window.location="testArr.html?id="+pid+"&arr="+arrErrors;
+				}else{
+					comments=randomOrder(comments);
+					errors = [];					//清空：错误列表；
+					index = 0;						//初始化：指针
+					eNum = 0;						//初始化：错误计数
+					$("span.sp3").html('');			//清空：页面错误计数
+					act();							//运行函数；
+				}
 			}else{
 				t2=new Date().getTime()-t1;
 				alert(MillisecondToDate(t2));	
@@ -116,8 +165,8 @@ function act() {
 //		$("a.btn1").hide();
 		$("a.btnP").show();
 		if(c_audio==1){
-			audio=document.getElementById('player');
-			play3(1);
+			audio=document.getElementById('player');			
+			play(0,3);	//错误后重复3次
 		}
 		//audio.play();
 		$(".e_act3").show();				//显示：act3元素；
@@ -131,6 +180,7 @@ function act() {
 		
 	});	 
 $(".f_btnSelect").click(function() {
+		$(".f_1st").hide();
 		$(".f_slipt").hide();
 		//alert($(this).attr("f_a"));
 		if($(this).attr("f_a")==$(".f_subTitle").html()){
@@ -145,10 +195,12 @@ $(".f_btnSelect").click(function() {
 				$("span.sp3").html(eNum);
 			
         };
-    });	
+    });
 	$("a.btn2").click(function() {
 		act()		
-	});	
+	});
+	
+	
     $("a.btn3").click(function() {
 		
         if ($("textarea.b").val().replace(/>/g,"&gt;").toLowerCase() == $(".a .a").html().toLowerCase()) {
@@ -188,30 +240,7 @@ function sen1(a) {
     }
 }
 
-function play3(i) {
 
-    if (i == 1) {
-        audio.currectTime = 0;
-        audio.play();
-        i = i + 1;
-        setTimeout("play3(2)", 2000);
-    } else if (i == 2) {
-        audio.currectTime = 0;
-        audio.play();
-        i = i + 1;
-        setTimeout("play3(3)", 2000);
-    } else if (i == 3) {
-        audio.currectTime = 0;
-        audio.play();
-        i = i + 1;
-        setTimeout("play3(4)", 2000);
-    } else if (i == 4) {
-        audio.currectTime = 0;
-        audio.play();
-        i = i + 1;
-    }
-
-}
 
 //计算总时间
 function MillisecondToDate(msd) {
@@ -292,7 +321,7 @@ function f_control_repeat(num_base,num_max,index){
 	return index;
 }
 
-function f_select(org_comments){
+function f_select(org_comments,s_num,f_chrome){
 	var arrSelect=[];	//定义select数组；
 	for(var i=0, len=org_comments.length; i<len; i++){	//取出当前指针的值。（同时取出与当前指正重复的值。）
 		if(org_comments[i]['subTitle']!=comments[index]['subTitle']){
@@ -305,7 +334,7 @@ function f_select(org_comments){
 	var arrSelect2 = [];	//定时数组2
 
 	//select num
-	var s_num=6;
+	var s_num=s_num-2;
 	for(i=0;i<=s_num;i++){	//获得目标数组-1的新数组
 		arrSelect2.push(arrSelect[i]);
 	}
@@ -316,8 +345,11 @@ function f_select(org_comments){
 	for(i=0;i<=s_num+1;i++){
 		$(".f_btnNo"+(i+1)).html(arrSelect[i].subject); //赋值
 		$(".f_btnNo"+(i+1)).attr("f_a",arrSelect[i].subTitle);
+		if(f_chrome==1){
+			$(".f_btnNo" + (i + 1)).prepend("<span class='label' style='width:130px !important;'>[" + $(".f_btnNo" + (i + 1)).attr("id") + "]</span>&nbsp;");
+		}
 		$(".f_btnNo"+(i+1)).show();
 	}	
 }})
-	
+
 		

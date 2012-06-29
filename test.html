@@ -17,12 +17,13 @@
 </head>
 <!-- 数据js -->
 <script src="js/senJSON.js" type="text/javascript"></script>
-<script src="js/data.js" type="text/javascript"></script>
+<script src="js/newsJSON.js" type="text/javascript"></script>
 <!-- 静态js -->
 <!--<script src="http://192.168.1.104/git_test073/index.php/js/testSelect" type="text/javascript"></script>-->
 <!--<script src="http://localhost/git_test073/index.php/js/testSelect" type="text/javascript"></script>-->
 <!--<script src="js/test.txt" type="text/javascript"></script>-->
 <script src="js/test_select.txt" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
 <body class="secret" id="ul">
 <div class="navbar navbar-top-leeke">
     <div class="navbar-inner">
@@ -30,15 +31,10 @@
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a><a href="javascript:void(0);" class="brand"> N:<span class="sp1"></span>;T:<span class="sp2"></span>;E:<span class="sp3"></span>; </a>
             <div class="nav-collapse">
                 <ul class="nav">
-                    <li>
-                        <a class="btnCn updatebtn f_slipt" num="1" href="javascript:void(0);">Slipt 1</a>
-                    </li>
-                    <li>
-                        <a class="btnCn updatebtn f_slipt" num="2" href="javascript:void(0);">Slipt 2</a>
-                    </li>
-                    <li>
-                        <a class="btnCn updatebtn f_slipt" num="3" href="javascript:void(0);">Slipt 3</a>
-                    </li>
+                    <li><a class="btnCn updatebtn f_slipt" num="1" href="javascript:void(0);">Slipt 1</a> </li>
+                    <li><a class="btnCn updatebtn f_slipt" num="2" href="javascript:void(0);">Slipt 2</a> </li>
+                    <li><a class="btnCn updatebtn f_slipt" num="3" href="javascript:void(0);">Slipt 3</a> </li>
+                    <li><a class="btnCn updatebtn f_slipt" onClick="document.getElementById('player').currentTime = 0;document.getElementById('player').play()" href="javascript:void(0);">Play</a></li>
                 </ul>
             </div>
         </div>
@@ -48,62 +44,35 @@
     <div>
         <ul class="nav nav-tabs nav-stacked ul_line">
             <!-- 问题_句子 -->
-            <li class="sharewith e_element">
-                <a class="q_en"> </a>
-            </li>
+            <li class="sharewith e_element"> <a class="q_en"> </a> </li>
             <!-- 英文例句 -->
-            <li class="sharewith e_element e_act3">
-                <a class="f_en"></a>
-            </li>
+            <li class="sharewith e_element e_act3"> <a class="f_en"></a> </li>
             <!-- 中文例句 -->
-            <li class="sharewith e_element e_act3">
-                <a class="f_cn"></a>
-            </li>
+            <li class="sharewith e_element e_act3"> <a class="f_cn"></a> </li>
             <!-- 问题 -->
-            <li class="sharewith e_element e_act1 e_act2 e_act3">
-                <a class="f_subTitle"> </a>
-            </li>
+            <li class="sharewith e_element e_act1 e_act2 e_act3"> <a class="f_subTitle"> </a> </li>
             <!-- 答案 -->
-            <li class="sharewith a e_element e_act3">
-                <a class="f_subject"> </a>
-            </li>
+            <li class="sharewith a e_element e_act3"> <a class="f_subject"> </a> </li>
             <!-- 错误 -->
-            <li class="sharewith e e_element">
-                <a class="e font_red"> </a>
-            </li>
+            <li class="sharewith e e_element"> <a class="e font_red"> </a> </li>
         </ul>
         <!-- 输入框 -->
         <div class="lib txtr e_element textarea_skin">
             <textarea name="message" class="b textarea_full" ></textarea>
         </div>
         <ul class="nav nav-tabs nav-stacked e_act1 e_element s_selectList">
-            <li>
-                <a class="f_btnSelect f_btnNo1"  href="javascript:void(0);" f_a=""></a>
-            </li>
-            <li>
-                <a class="f_btnSelect f_btnNo2"  href="javascript:void(0);" f_a=""></a>
-            </li>
-            <li>
-                <a class="f_btnSelect f_btnNo3"  href="javascript:void(0);" f_a=""></a>
-            </li>
-            <li>
-                <a class="f_btnSelect f_btnNo4"  href="javascript:void(0);" f_a=""></a>
-            </li>
-            <li>
-                <a class="f_btnSelect f_btnNo5"  href="javascript:void(0);" f_a=""></a>
-            </li>
-            <li>
-                <a class="f_btnSelect f_btnNo6"  href="javascript:void(0);" f_a=""></a>
-            </li>
-            <li>
-                <a class="f_btnSelect f_btnNo7"  href="javascript:void(0);" f_a=""></a>
-            </li>
-            <li>
-                <a class="f_btnSelect f_btnNo8"  href="javascript:void(0);" f_a=""></a>
-            </li>
-            <li>
-                <a class="f_btnSelect f_btnNo9"  href="javascript:void(0);" f_a=""></a>
-            </li>
+            <li> <a href="javascript:void(0);" class="f_btnSelect f_btnNo1" id="A" f_a="">[A]&nbsp;</a> </li>
+            <li> <a href="javascript:void(0);" class="f_btnSelect f_btnNo2" id="B" f_a="">[B]&nbsp;</a> </li>
+            <li> <a href="javascript:void(0);" class="f_btnSelect f_btnNo3" id="C" f_a="">[C]&nbsp;</a> </li>
+            <li> <a href="javascript:void(0);" class="f_btnSelect f_btnNo4" id="D" f_a="">[D]&nbsp;</a> </li>
+            <li> <a href="javascript:void(0);" class="f_btnSelect f_btnNo5" id="E" f_a="">[E]&nbsp;</a> </li>
+            <li> <a href="javascript:void(0);" class="f_btnSelect f_btnNo6" id="F" f_a="">[F]&nbsp;</a> </li>
+            <li> <a href="javascript:void(0);" class="f_btnSelect f_btnNo7" id="G" f_a="">[G]&nbsp;</a> </li>
+            <li> <a href="javascript:void(0);" class="f_btnSelect f_btnNo8" id="1" f_a="">[1]&nbsp;</a> </li>
+            <li> <a href="javascript:void(0);" class="f_btnSelect f_btnNo9" id="2" f_a="">[2]&nbsp;</a> </li>
+            <li> <a href="javascript:void(0);" class="f_btnSelect f_btnNo10" id="3" f_a="">[3]&nbsp;</a> </li>
+            <li> <a href="javascript:void(0);" class="f_btnSelect f_btnNo11" id="4" f_a="">[4]&nbsp;</a> </li>
+            <li> <a href="javascript:void(0);" class="f_btnSelect f_btnNo12" id="5" f_a="">[5]&nbsp;</a> </li>
         </ul>
     </div>
     <div class="full">
@@ -111,14 +80,10 @@
             <a class="btn1 updatebtn e_element full btn btnQ btn-primary btn-large" href="javascript:void(0);" 1>Submit</a>
         </div>
         <div>
-            <a class="btn2 updatebtn e_element btn btn-primary btn-large" href="javascript:void(0);">Submit</a>
+            <a class="btn2 updatebtn e_element btn btn-primary btn-large" id="S" href="javascript:void(0);">Submit</a>
         </div>
         <div>
             <a class="btn3 updatebtn e_element e_act2 btn btn-primary btn-large">Submit</a>
-        </div>
-        <!-- 按键：播放 -->
-        <div>
-            <a class="updatebtn e_element e_act1 e_act2 btn btn-primary btn-large" onClick="document.getElementById('player').currentTime = 0;document.getElementById('player').play()" href="javascript:void(0);">Play</a>
         </div>
         <!-- 显示问题 -->
         <div>

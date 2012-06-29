@@ -1,22 +1,12 @@
+
 $(function() {
 	
 	var t1= new Date().getTime(); //初始化时间
 	var dNum= 0;	//错误返回按钮延时时间；
-	var testSize=7;
-	if(testSize>0){
-		var comments2 = [];
-		for(i=0;i<=testSize-1;i++){
-			comments2.push(comments[i]);
-		}
-		comments = comments2;
-	}
 	
 	//数组指针初始化；
     var index = 0;
 	var index_ = "";
-	var errors_1st = [];
-	var round=1;
-	var getError="";
 		
 	var errors = [];	//错误返回按钮延时时间；
 	var eNum = 0;	//错误计数初始化；
@@ -31,13 +21,13 @@ $(function() {
 	}
 	
 	act(); //进入函数act
-		
-function act() {
+
+	function act() {
 		//分段重复函数
 		
 //	alert(index+":"+eNum);
 //	if(rNum==0){
-		if ((index <= 5 && eNum == 3)) {
+				        if ((index <= 5 && eNum == 3)) {
 
             alert("Repeat");
             index = 0;
@@ -67,41 +57,41 @@ function act() {
             $("span.sp3").html(eNum);
 
         }
-//        if ((index > 15 && index <= 20 && eNum == 9)) {
-//
-//            alert("Repeat");
-//            index = 0;
-//            //			var index_ = "";
-//            errors = [];
-//            eNum = 0;
-//            $("span.sp3").html(eNum);
-//
-//        }
-//        if ((index > 20 && index <= 25 && eNum == 11)) {
-//
-//            alert("Repeat");
-//            index = 0;
-//            //			var index_ = "";
-//            errors = [];
-//            eNum = 0;
-//            $("span.sp3").html(eNum);
-//
-//        }
-//        if ((index > 25 && index <= 30 && eNum == 13)) {
-//
-//            alert("Repeat");
-//            index = 0;
-//            //			var index_ = "";
-//            errors = [];
-//            eNum = 0;
-//            $("span.sp3").html(eNum);
-//
-//        }//	}
+        if ((index > 15 && index <= 20 && eNum == 9)) {
+
+            alert("Repeat");
+            index = 0;
+            //			var index_ = "";
+            errors = [];
+            eNum = 0;
+            $("span.sp3").html(eNum);
+
+        }
+        if ((index > 20 && index <= 25 && eNum == 11)) {
+
+            alert("Repeat");
+            index = 0;
+            //			var index_ = "";
+            errors = [];
+            eNum = 0;
+            $("span.sp3").html(eNum);
+
+        }
+        if ((index > 25 && index <= 30 && eNum == 13)) {
+
+            alert("Repeat");
+            index = 0;
+            //			var index_ = "";
+            errors = [];
+            eNum = 0;
+            $("span.sp3").html(eNum);
+
+        }//	}
 
 if (index<comments.length) {					//如果指针在范围内；
 			$(".e_element").hide();				//隐藏所有元素；
-			$(".en").html("");					//初始化英文部分；
-			$(".cn").html("");					//初始化中文部分；
+			$("b.en").html("");					//初始化英文部分；
+			$("b.cn").html("");					//初始化中文部分；
 //			sen1(comments[index]['a']);			//调用句库函数；
 			$("span.sp1").html(index+1);		//调整当前数值；
 			$("span.sp2").html(comments.length);//显示总数；
@@ -115,19 +105,16 @@ if (index<comments.length) {					//如果指针在范围内；
 				q_en=q;
 			}
 			btnQ="Submit";
-			s_audio="";
-			s_audio=comments[index]['subTitle']+".mp3";
-			$("audio").attr({"src": ""});
-			$("audio").attr({"src": "../audio/"+s_audio});
+			
+			$("audio").attr({"src": audioUrl+"audio/"+comments[index]['a']+".mp3"});
 			audio=document.getElementById('player') //初始化音频路径
-			$(".q_en").html(q_en);//问题区赋值
-			$(".q").html(comments[index]['subject']);//问题区赋值
-			$(".a .a").html(comments[index]['subTitle']);//答案区赋值
+			$("b.q_en").html(q_en);//问题区赋值
+			$("b.q").html(comments[index]['subject']);//问题区赋值
+			$("b.a").html(comments[index]['subTitle']);//答案区赋值
 			$(".sen .en").html(comments[index]['en']);//问题区赋值
 			$(".sen .cn").html(comments[index]['cn']);//答案区赋值
 			$(".btnQ").html(btnQ);
 			$(".e_act1").show();				//显示：act1元素；
-
 			play3(1);
 			$("textarea.b")[0].focus();			//输入框焦点
 			
@@ -144,12 +131,13 @@ if (index<comments.length) {					//如果指针在范围内；
 			}else{
 				t2=new Date().getTime()-t1;
 				alert(MillisecondToDate(t2));	
-				window.location=jumpUrl+"&title="+MillisecondToDate(t2)+"&error="+getError;
+				window.location=jumpUrl+"&title="+MillisecondToDate(t2);
 				//window.location="index."+bothPage+"#pid"+pid;
 			}
 		}
 
-    }		
+    }
+	
 	function act2(){
 		
 //		$(".sharewith.a").hide();
@@ -167,7 +155,9 @@ if (index<comments.length) {					//如果指针在范围内；
 		$("textarea.b")[0].focus();	
 
 
-	}	
+	}
+	
+	//Error
 	function act3(){
 		
 		$(".e_element").hide();				//隐藏所有元素；
@@ -180,22 +170,22 @@ if (index<comments.length) {					//如果指针在范围内；
 //		$("div.lib").hide();
 //		$("a.btn1").hide();
 		$("a.btnP").show();
-		audio=document.getElementById('player');
+		audio=document.getElementById('player')
 		play3(1);
-		//audio.play();
 		$(".e_act3").show();				//显示：act3元素；
 		$("a.btn2").hide().delay(dNum).fadeIn();
 		$("a.btn3").hide();	
 
 
-	}	
+	}
+
 	$("a.btnCn").click(function(){
 		$(".sharewith .q").parent().show();
 		
-	});	
+	});
     $("a.btn1").click(function() {
-		$(".f_slipt").hide();
-        if ($("textarea.b").val().replace(/>/g,"&gt;").toLowerCase() == $(".a .a").html().toLowerCase()) {
+
+        if ($("textarea.b").val().replace(/>/g,"&gt;").toLowerCase() == $("b.a").html().toLowerCase()) {
 			act();
         } else {
 				act3();
@@ -206,38 +196,21 @@ if (index<comments.length) {					//如果指针在范围内；
 				$("span.sp3").html(eNum);
 			
         };
-    });	
+    });
+	
 	$("a.btn2").click(function() {
 		act2()		
-	});	
+	});
+	
     $("a.btn3").click(function() {
 		
-        if ($("textarea.b").val().replace(/>/g,"&gt;").toLowerCase() == $(".a .a").html().toLowerCase()) {
+        if ($("textarea.b").val().replace(/>/g,"&gt;").toLowerCase() == $("b.a").html().toLowerCase()) {
 			act()
         } else {
 			act3()
         };
-    });	
-	$("a.f_slipt").click(function(){
-		Arrsplit($(this).attr("num"));
-	});	
-	function Arrsplit(s){
-		//s1=0+(s-1)*10;
-		//alert(s);
-		var x=5;
-		var comments2=[];
-		for(var i=(s-1)*x, len=s*x; i<len; i++){
-			comments2.push(comments[i]);	
-		}
-		comments = comments2;				//题库赋值错误列表
-		errors = [];					//清空：错误列表；
-		index = 0;						//初始化：指针
-		eNum = 0;						//初始化：错误计数
-		$("span.sp3").html('');			//清空：页面错误计数	
-		act();							//运行函数；	
-		$(".f_slipt").hide();
-	}
-
+    });
+})
 
 //		function sen1(a){
 //			
@@ -266,7 +239,6 @@ if (index<comments.length) {					//如果指针在范围内；
 //			}else{
 //				return false;
 			}else if(i==2){
-//				alert("123123");
 				audio.currectTime=0;
 				audio.play();
 				i=i+1;
@@ -317,10 +289,3 @@ if (index<comments.length) {					//如果指针在范围内；
 			return time;
 		}
 
-})
-
-	
-
-
-
-	
