@@ -1,3 +1,4 @@
+body{ background:#333;}
 #ul { display: none; }
 .container .e_element { font-size: 22px; }
 .navbar-top-leeke .navbar-inner, .navbar-bottom-leeke .navbar-inner { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-top-left-radius: 0; border-top-right-radius: 0; padding-left: 0; padding-right: 0; }

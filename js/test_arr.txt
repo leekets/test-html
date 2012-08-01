@@ -9,6 +9,7 @@ if (url.indexOf("?") != -1) {
 
 
 pid=theRequest["id"];
+
 var arr;
 arr=theRequest["arr"];
 //alert(arr.length);
@@ -33,15 +34,26 @@ if (typeof(arr)!="undefined" && arr!=""){
 		}	
 	}
 }
-comments=randomOrder(comments);
+
 
 $(function() {
-
 	var dNum= 0;	
-	var testSize=15;
+	var testSize=5;
 	var c_audio=1;
 	var c_jump=1;
+	var c_random=1;
 	
+	var get_c_random=theRequest["c_random"];
+	if((typeof(get_c_random)!="undefined" && get_c_random!="")){
+		c_random=get_c_random;	
+	}
+	var get_testSize=theRequest["testSize"];
+	if((typeof(get_testSize)!="undefined" && get_testSize!="")){
+		testSize=get_testSize;	
+	}
+	
+	if (c_random==1){comments=randomOrder(comments)};
+	comments=f_control_num2(testSize,comments,testSize);
     var t1 = new Date().getTime(); // 初始化时间
     // 数组指针初始化；
     var index = 0;
@@ -66,36 +78,36 @@ function act() {
 		
 //	alert(index+":"+eNum);
 //	if(rNum==0){
-		if ((index <= 5 && eNum == 3)) {
-
-            alert("Repeat");
-            index = 0;
-            //			var index_ = "";
-            errors = [];
-            eNum = 0;
-            $("span.sp3").html(eNum);
-
-        }
-        if ((index > 5 && index <= 10 && eNum == 5)) {
-
-            alert("Repeat");
-            index = 0;
-            //			var index_ = "";
-            errors = [];
-            eNum = 0;
-            $("span.sp3").html(eNum);
-
-        }
-        if ((index > 10 && index <= 15 && eNum == 7)) {
-
-            alert("Repeat");
-            index = 0;
-            //			var index_ = "";
-            errors = [];
-            eNum = 0;
-            $("span.sp3").html(eNum);
-
-        }
+//		if ((index <= 5 && eNum == 3)) {
+//
+//            alert("Repeat");
+//            index = 0;
+//            //			var index_ = "";
+//            errors = [];
+//            eNum = 0;
+//            $("span.sp3").html(eNum);
+//
+//        }
+//        if ((index > 5 && index <= 10 && eNum == 5)) {
+//
+//            alert("Repeat");
+//            index = 0;
+//            //			var index_ = "";
+//            errors = [];
+//            eNum = 0;
+//            $("span.sp3").html(eNum);
+//
+//        }
+//        if ((index > 10 && index <= 15 && eNum == 7)) {
+//
+//            alert("Repeat");
+//            index = 0;
+//            //			var index_ = "";
+//            errors = [];
+//            eNum = 0;
+//            $("span.sp3").html(eNum);
+//
+//        }
 //        if ((index > 15 && index <= 20 && eNum == 9)) {
 //
 //            alert("Repeat");
@@ -198,7 +210,6 @@ if (index<comments.length) {					//如果指针在范围内；
 
 	}	
 	function act3(){
-		
 		$(".e_element").hide();				//隐藏所有元素；
 		$(".sharewith.a").show();
 		$(".sharewith.e .e").html($("textarea.b").val());
@@ -227,7 +238,7 @@ if (index<comments.length) {					//如果指针在范围内；
     $("a.btn1").click(function() {
 		$(".f_slipt").hide();
         if ($("textarea.b").val().replace(/>/g,"&gt;").toLowerCase() == $(".a .a").html().toLowerCase()) {
-			act();
+				act();
         } else {
 				act3();
 				eNum+=1
@@ -242,7 +253,6 @@ if (index<comments.length) {					//如果指针在范围内；
 		act2()		
 	});	
     $("a.btn3").click(function() {
-		
         if ($("textarea.b").val().replace(/>/g,"&gt;").toLowerCase() == $(".a .a").html().toLowerCase()) {
 			act()
         } else {
@@ -252,7 +262,6 @@ if (index<comments.length) {					//如果指针在范围内；
 	$("a.f_slipt").click(function(){
 		Arrsplit($(this).attr("num"));
 	});    
-    
 function MillisecondToDate(msd) {
     var time = parseFloat(msd) / 1000;
     if (null != time && "" != time) {
@@ -267,42 +276,7 @@ function MillisecondToDate(msd) {
     return time;
 }
 })
-function play3(i) {
-
-    if (i == 1) {
-        audio.currectTime = 0;
-        audio.play();
-        i = i + 1;
-        // alert("123");
-        // playVar="play3("+i+");";
-        setTimeout("play3(2)", 2000);
-        // play3(i);
-        // }else{
-        // return false;
-    } else if (i == 2) {
-        audio.currectTime = 0;
-        audio.play();
-        i = i + 1;
-        // alert("123");
-        // playVar="play3("+i+");";
-        setTimeout("play3(3)", 2000);
-    } else if (i == 3) {
-        audio.currectTime = 0;
-        audio.play();
-        i = i + 1;
-        // alert("123");
-        // playVar="play3("+i+");";
-        setTimeout("play3(4)", 2000);
-    } else if (i == 4) {
-        audio.currectTime = 0;
-        audio.play();
-        i = i + 1;
-        // alert("123");
-        // playVar="play3("+i+");";
-        // setTimeout("play3(4)",2000);
-    }
-
-}function Arrsplit(s) {
+function Arrsplit(s) {
     //s1=0+(s-1)*10;
     //alert(s);
     var x = 5;
@@ -322,8 +296,8 @@ function play3(i) {
 function sen1(a) {
     for (x in senJSON) {
         if (senJSON[x].en != null) {
-            if (senJSON[x].en.toLowerCase().indexOf(a.toLowerCase()) >= 0) {
-            	$(".f_en").html(senJSON[x].en.replace(a,'<span class="font_red">'+a+'</span>'));
+            if (a.toLowerCase().indexOf(senJSON[x].en.toLowerCase()) >= 0) {
+            	$(".f_en").html(a.replace(senJSON[x].en,'<span class="font_red">'+senJSON[x].en+'</span>'));
                 $(".f_cn").html(senJSON[x].cn);
                 break;
             }
@@ -401,18 +375,13 @@ function f_control_repeat(num_base,num_max,index){
 		var r_n = num_base;
 		var r_2 = eval((parseInt((index-1)/5)+1)*r_n)
 		if(index <= r_2*1 && eNum==eval(r_2*0.4+1)){
-			index = 0;
-		  alert("Repeat");
-		  errors = [];
-		  eNum = 0;
-		  $("span.sp3").html(eNum);
-		  act();
+			index = -1;
 		}		
 	}
 	return index;
 }
 
-function f_select(org_comments,s_num){
+function f_select(org_comments,s_num,f_chrome){
 	var arrSelect=[];	//定义select数组；
 	for(var i=0, len=org_comments.length; i<len; i++){	//取出当前指针的值。（同时取出与当前指正重复的值。）
 		if(org_comments[i]['subTitle']!=comments[index]['subTitle']){
@@ -436,6 +405,10 @@ function f_select(org_comments,s_num){
 	for(i=0;i<=s_num+1;i++){
 		$(".f_btnNo"+(i+1)).html(arrSelect[i].subject); //赋值
 		$(".f_btnNo"+(i+1)).attr("f_a",arrSelect[i].subTitle);
+		if(f_chrome==1){
+			$(".f_btnNo" + (i + 1)).prepend("<span class='label' style='width:130px !important;'>[" + $(".f_btnNo" + (i + 1)).attr("id") + "]</span>&nbsp;");
+		}
 		$(".f_btnNo"+(i+1)).show();
 	}	
 }
+

@@ -1,5 +1,12 @@
-		//判断浏览器
-	if (window.navigator.userAgent.indexOf('Chrome') > -1) {
+﻿		
+	var dNum= 4000;	
+	var testSize=10;
+	var c_audio=1;
+	var c_jump=0;
+	var c_select=4;
+$(function() {
+	
+	if (window.navigator.userAgent.indexOf('Chrome') > -1) {		//判断是否为chrome浏览器；
 		var f_chrome=1;
 	    //alert('Chrome!');
 	} else {
@@ -8,39 +15,66 @@
 	}
 
 	
-	//合并通用js	
-	var commentsAll= newsJSON
-	var url = location.href;
-	var theRequest = new Object();
-	var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
-	if (url.indexOf("?") != -1) {
-		for (var i = 0; i < paraString.length; i++) {
-			theRequest[paraString[i].split("=")[0]] = unescape(paraString[i].split("=")[1]);
+	if(f_chrome==1){		//Chrome下添加按键特效；
+		window.onload = function() {		
+			document.body.onkeydown = function(e) {
+				e = e || window.event;
+				// 把键值转换成字母
+				var key = String.fromCharCode(e.keyCode); 
+				var dom = document.getElementById(key);
+				if(document.getElementById(key).style.display=="block" || document.getElementById(key).style.display=="inline-block"){
+					if(dom) {
+						dom.click();
+					}
+				}else{
+					//alert("error");	
+				}
+			}
+		}
+	}	
+	
+	
+	var commentsAll= newsJSON;	
+
+	pid=getValue("id");	//git id
+	if(pid==undefined){	//if id="" then jump to index
+		window.location="index.html";
+	}
+	
+	
+	$(".f_getId").attr("id",pid);
+	$(".f_jumpArr2").click(function(){
+		window.location=$(this).attr("_href")+"&id="+$(this).attr("id");
+	});
+	
+	$("title").html(cateJSON[usual_search(cateJSON,x)].category);	//change title
+	
+	var arrPhrase=[1101,1102,1103,1104,1105,1106,1107,1108,1109,1110,1122,1123,1124,1125,1126,1127,1128,1129,1130,1131];
+	for(var i=0; i<arrPhrase.length;i++){
+		if(arrPhrase[i]==pid){
+			var pagePhrase=true;
+			$("title").append(" [Phrase Mode]");
 		}
 	}
-
 	
-	pid=theRequest["id"];
-//	pid=299;
-	var bothPage="asp";
-	var jumpUrl="jump.html?id="+pid;
+	var bothPage="asp";		//Leeke-Todo:Ready delete
+	var jumpUrl="jump.html?id="+pid;	//Leeke-Todo:Ready delete
 	var audioUrl="";
 	var comments=[];
 	for(var i=0, len=commentsAll.length; i<len; i++){
 		if(commentsAll[i].categoryId==pid){
 			comments.push(commentsAll[i]);
 		}	
-	}	
-$(function() {
-	$(".f_jumpTest").attr("href","testArr.html?id="+pid);
-	
-	//错误返回按钮延时时间；
-	var dNum= 4000;	
-	var testSize=15;
-	var c_audio=1;
-	var c_jump=1;
-	var c_select=6;
-
+	}
+	if(pagePhrase==true){
+		var commentsTemp=[];
+		for(var i=0; i<10; i++){
+			commentsTemp.push(comments[i]);
+		}
+		comments=commentsTemp;
+	};
+	//alert(print_array(comments));
+	$(".f_jumpTest").attr("href","testArr.html?id="+pid); //page jump	
 	var t1= new Date().getTime(); //初始化时间
     var index = 0;	//数组指针初始化；
 	var getError="";
@@ -61,7 +95,16 @@ $(function() {
 	act(); //进入函数act
 		
 function act() {
-		index=f_control_repeat(5,15,index);
+		//index=f_control_repeat(5,15,index);
+		if(index==-1){
+			alert("Repeat");
+			errors = [];
+			eNum = 0;
+			index=0;
+			$("span.sp3").html(eNum);
+			act();
+			return;
+		}
 
 		if (index<comments.length) {			//如果指针在范围内；
 			$(".e_element").hide();				//隐藏所有元素；
@@ -135,72 +178,55 @@ function act() {
 
 		
 	function act2(){
-		
-//		$(".sharewith.a").hide();
-//		$(".sharewith.e").hide();
-//		$(".sharewith.en").hide();
-//		$(".sharewith.cn").hide();
-//		$("div.lib").show();
-//		$("a.btnP").hide();
-//		$("a.btn2").hide();
-//		$("a.btn3").show();	
-//		$("btnP").hide();	
 		$(".e_element").hide();				//隐藏所有元素；
 		$("textarea.b").val("");
 		$(".e_act2").show();				//显示：act2元素；
 		$("textarea.b")[0].focus();	
+	}
+	
 
-
-	}	
 	function act3(){
-		
 		$(".e_element").hide();				//隐藏所有元素；
 		$(".sharewith.a").show();
 		$(".sharewith.e .e").html($("textarea.b").val());
-//		$(".sharewith.e").show();
-//		$(".sharewith.en").show();
-//		$(".sharewith.cn").show();
 		$("textarea.b").val("");
-//		$("div.lib").hide();
-//		$("a.btn1").hide();
 		$("a.btnP").show();
 		if(c_audio==1){
 			audio=document.getElementById('player');			
 			play(0,3);	//错误后重复3次
 		}
-		//audio.play();
 		$(".e_act3").show();				//显示：act3元素；
 		$("a.btn2").hide().delay(dNum).fadeIn();
 		$("a.btn3").hide();	
-
-
 	}	
 	$("a.btnCn").click(function(){
 		$(".sharewith .q").parent().show();
-		
-	});	 
-$(".f_btnSelect").click(function() {
-		$(".f_1st").hide();
-		$(".f_slipt").hide();
-		//alert($(this).attr("f_a"));
-		if($(this).attr("f_a")==$(".f_subTitle").html()){
-        //if ($("textarea.b").val().replace(/>/g,"&gt;").toLowerCase() == $(".a .a").html().toLowerCase()) {
-			act();
-        } else {
-				act3();
+	});
+	
+	$(".f_btnSelect").click(function() {
+			$(".f_1st").hide();
+			$(".f_slipt").hide();
+			if($(this).attr("f_a")==$(".f_subTitle").html()){
+				act();
+	        } else {
+				//act3();
+	        	$(this).children(".label").show();
+	        	errors.push(commentsAll[usual_search2(commentsAll,$(this).attr("f_id"))]);
+				s_audio=commentsAll[usual_search2(commentsAll,$(this).attr("f_id"))]['subTitle']+".mp3";
+				$("audio").attr({"src": "../audio/"+s_audio});
+				play(0,1);
 				eNum+=1
 				errors.push(comments[index-1]);
 	//			console.log(errors);
 	//			if(index_==""){index_=comments[index-1]['id']}else{index_+=","+comments[index-1]['id']};
 				$("span.sp3").html(eNum);
-			
-        };
-    });
+	        };
+	});
+	
 	$("a.btn2").click(function() {
 		act()		
 	});
-	
-	
+
     $("a.btn3").click(function() {
 		
         if ($("textarea.b").val().replace(/>/g,"&gt;").toLowerCase() == $(".a .a").html().toLowerCase()) {
@@ -208,10 +234,7 @@ $(".f_btnSelect").click(function() {
         } else {
 			act3()
         };
-    });	
-	$("a.f_slipt").click(function(){
-		Arrsplit($(this).attr("num"));
-	});	function Arrsplit(s) {
+    });	function Arrsplit(s) {
     //s1=0+(s-1)*10;
     //alert(s);
     var x = 5;
@@ -231,8 +254,8 @@ $(".f_btnSelect").click(function() {
 function sen1(a) {
     for (x in senJSON) {
         if (senJSON[x].en != null) {
-            if (senJSON[x].en.toLowerCase().indexOf(a.toLowerCase()) >= 0) {
-            	$(".f_en").html(senJSON[x].en.replace(a,'<span class="font_red">'+a+'</span>'));
+            if (a.toLowerCase().indexOf(senJSON[x].en.toLowerCase()) >= 0) {
+            	$(".f_en").html(a.replace(senJSON[x].en,'<span class="font_red">'+senJSON[x].en+'</span>'));
                 $(".f_cn").html(senJSON[x].cn);
                 break;
             }
@@ -310,12 +333,7 @@ function f_control_repeat(num_base,num_max,index){
 		var r_n = num_base;
 		var r_2 = eval((parseInt((index-1)/5)+1)*r_n)
 		if(index <= r_2*1 && eNum==eval(r_2*0.4+1)){
-			index = 0;
-		  alert("Repeat");
-		  errors = [];
-		  eNum = 0;
-		  $("span.sp3").html(eNum);
-		  act();
+			index = -1;
 		}		
 	}
 	return index;
@@ -345,11 +363,15 @@ function f_select(org_comments,s_num,f_chrome){
 	for(i=0;i<=s_num+1;i++){
 		$(".f_btnNo"+(i+1)).html(arrSelect[i].subject); //赋值
 		$(".f_btnNo"+(i+1)).attr("f_a",arrSelect[i].subTitle);
+		$(".f_btnNo"+(i+1)).attr("f_id",arrSelect[i].id);
+		$(".f_btnNo" + (i + 1)).prepend("<span class=\"label label-warning none\">"+arrSelect[i].subTitle+"</span>&nbsp;");
 		if(f_chrome==1){
 			$(".f_btnNo" + (i + 1)).prepend("<span class='label' style='width:130px !important;'>[" + $(".f_btnNo" + (i + 1)).attr("id") + "]</span>&nbsp;");
 		}
 		$(".f_btnNo"+(i+1)).show();
 	}	
-}})
+}
+
+})
 
 		

@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- First jQuery -->
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<!-- Then jQuery.tmpl -->
+<script src="http://github.com/downloads/SteveSanderson/knockout/jquery.tmpl.js"></script>
+<script type='text/javascript' src="http://github.com/downloads/SteveSanderson/knockout/knockout-2.1.0.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body>
+<h1>People</h1>
+<div data-bind="template: 'peopleList'">
+</div>
+<script type="text/html" id="peopleList">
+    {{each people}}
+        <p>
+            <b>${category}</b>
+        </p>
+    {{/each}}
+</script>
+<script type="text/javascript">
+    var viewModel = {
+       people: ko.observableArray([{"category":"lrc"},{"category":"phrase 1"},{"category":"phrase 2"},{"category":"\tphrase 3"},{"category":"phrase 4"},{"category":"mix"},{"category":"mix 10+"},{"category":"mix 20+"},{"category":"mix 30+"},{"category":"\u5feb\u6377\u952e"},{"category":"Demo"},{"category":"new 4-1"},{"category":"new 4-2"},{"category":"new 4-3"},{"category":"new 4-4"},{"category":"select 1"},{"category":"select 2"},{"category":"select 3"},{"category":"select 4"}])
+    }
+    ko.applyBindings(viewModel);
+</script>
+</body>
+</html>
